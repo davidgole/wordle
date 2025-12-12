@@ -29,6 +29,10 @@ document.addEventListener("keydown", (e) => {
     if (/^[a-zA-ZčšžČŠŽ]$/.test(key) && currentTile < 5 && !isGameOver) {
         const tile = rows[currentRow].children[currentTile];
         tile.textContent = key.toUpperCase();
+        tile.classList.add('press');
+        tile.addEventListener('animationend', () => {
+            tile.classList.remove('press');
+        });
         currentTile++;
     }
 
@@ -36,6 +40,10 @@ document.addEventListener("keydown", (e) => {
     if (key === "Backspace" && currentTile > 0) {
         currentTile--;
         const tile = rows[currentRow].children[currentTile];
+        tile.classList.add('delete');
+        tile.addEventListener('animationend', () => {
+            tile.classList.remove('delete');
+        });
         tile.textContent = "";
     }
 
@@ -64,12 +72,25 @@ document.addEventListener("keydown", (e) => {
         }
     }
 
-    if ((countWrongWords == 6) || isGameOver) {
+    if (isGameOver) {
         isGameOver = true;
-        document.getElementById("message").textContent = "Konec igre!";
+        document.getElementById("message").textContent = "Zmaga!";
         var x = document.createElement("BUTTON");
         var t = document.createTextNode("Igraj še enkrat");
         var c = x.classList.add("button");
+        x.appendChild(t);
+        document.body.appendChild(x);
+        x.addEventListener("click", function() {
+            window.location.reload();
+        });
+    }
+    if (countWrongWords == 6) {
+        isGameOver = true;
+        document.getElementById("message").textContent = "Konec igre! Pravilna beseda je " + todaysWord;
+        var x = document.createElement("BUTTON");
+        var t = document.createTextNode("Igraj še enkrat");
+        var c = x.classList.add("button");
+        x.style.backgroundColor = "red";
         x.appendChild(t);
         document.body.appendChild(x);
         x.addEventListener("click", function() {
@@ -105,6 +126,9 @@ function checkWord(word) {
                 tile.style.backgroundColor = 'orange';
                 tile.style.color = 'black';
                 console.log(word[i], " RUMENO")
+            } else {
+                tile.style.backgroundColor = '#E8E8E8';
+                console.log(word[i], " SIVO")
             }
             //tile.style.backgroundColor = 'gray';
             //tile.style.color = 'white';

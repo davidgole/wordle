@@ -31,6 +31,39 @@ body {
     text-transform: uppercase;
 }
 
+.tile.press {
+    animation: press_pulse 0.4s ease-in-out;
+}
+
+@keyframes press_pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.tile.delete {
+    animation: delete_pulse 0.4s ease-in-out;
+}
+
+@keyframes delete_pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
 #message {
     margin: 20px;
     font-size: 20px;
